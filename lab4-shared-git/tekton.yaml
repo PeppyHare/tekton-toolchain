@@ -88,7 +88,7 @@ spec:
   - name: task-workspace 
   steps:
     - name: echoenvvar
-      image: ubuntu
+      image: registry.access.redhat.com/ubi8/ubi
       command: ["/bin/bash", "-c"]
       args:
         - |
