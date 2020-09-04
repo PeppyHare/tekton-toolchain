@@ -49,44 +49,44 @@ spec:
     - 01 version
     command:
     - echo
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: echo
   - args:
     - -l
     - /
     command:
     - ls
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: lslslash
   - args:
     - -l
     command:
     - ls
-    image: ubuntu
-    name: lsl-ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
+    name: lsl-ubi
   - command:
     - pwd
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: pwd
   - command:
     - ls
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: ls
   - command:
     - env
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: env
   - args:
     - -c
     - echo stuff > file; ls; cat file
     command:
     - /bin/bash
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: write
   - args:
     - -l
     command:
     - ls
-    image: ubuntu
+    image: registry.access.redhat.com/ubi8/ubi
     name: lsafterfilemissing
 
