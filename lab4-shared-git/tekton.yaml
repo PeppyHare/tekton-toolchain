@@ -93,6 +93,7 @@ spec:
       args:
         - |
           set -x
+          env
           WS=$(workspaces.task-workspace.path)
           LAB=lab4-shared-git
           ls $WS
