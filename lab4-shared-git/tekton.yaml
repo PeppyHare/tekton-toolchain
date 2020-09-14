@@ -85,8 +85,24 @@ metadata:
   name: task-workspace
 spec:
   workspaces:
-  - name: task-workspace 
+  - name: task-workspace
+  sidecars:
+    - image: docker:dind
+      name: dockerindocker
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/run/
+          name: dind-socket
   steps:
+    - image: docker
+      name: build
+      workingDir: /workspace
+      command:
+        - ["/bin/sh", "-c", "docker", "info"]
+      volumeMounts:
+        - mountPath: /var/run/
+          name: dind-socket
     - name: echoenvvar
       image: registry.access.redhat.com/ubi8/ubi
       command: ["/bin/bash", "-c"]
@@ -101,33 +117,8 @@ spec:
           ls tekton
           echo testing
           [ "$(./tekton/$LAB/script.bash)" = "worked" ] || exit 1
-    - image: docker
-      name: client
-      workingDir: /workspace
-      command:
-        - /bin/sh
-        - -c
-        - |
-          cat > Dockerfile << EOF
-          FROM ubuntu
-          RUN apt-get update
-          ENTRYPOINT ["echo", "hello"]
-          EOF
-          docker build -t hello . && docker run hello
-          docker images
-      volumeMounts:
-        - mountPath: /var/run/
-          name: dind-socket
-  sidecars:
-    - image: docker:18.05-dind
-      name: server
-      securityContext:
-        privileged: true
-      volumeMounts:
-        - mountPath: /var/lib/docker
-          name: dind-storage
-        - mountPath: /var/run/
-          name: dind-socket
+
+
   volumes:
     - name: dind-storage
       emptyDir: {}
